@@ -1,0 +1,46 @@
+#!/bin/sh
+
+basedir=$(dirname "$0")
+
+read -p "Enter new cluster name on gcloud (default: production): " cluster
+cluster=${cluster:-production}
+
+echo "Getting cluster credentials..."
+{
+  gcloud container clusters get-credentials $cluster
+} || {
+  exit 1
+}
+
+echo "Making the current user an admin"
+kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config get-value account)
+
+echo "Initializing helm. Follow along with the instructions"
+helm init --wait
+
+echo "Creating some roles for tiller"
+kubectl create serviceaccount --namespace kube-system tiller
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}'
+
+read -p "Is this cluster running an Nvidia GPU? [y/n]" installdriver
+if [ $installdriver = "y" ]; then
+  kubectl create -f https://raw.githubusercontent.com/GoogleCloudPlatform/container-engine-accelerators/k8s-1.10/daemonset.yaml
+fi
+
+echo "Updating helm dependencies..."
+helm dependency build $basedir
+
+while : ; do
+  echo "Installing the helm chart..."
+
+  if helm install --name $cluster $basedir; then
+    break
+  else
+    echo "Waiting for tiller pods to start. Retrying in a second..."
+    sleep 1
+  fi
+done
+
+echo "Running post-install..."
+kubectl apply -f $basedir/post-install/cert-manager-cluster-issuer.yaml

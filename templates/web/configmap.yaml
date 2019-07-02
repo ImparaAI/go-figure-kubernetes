@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-config
+  namespace: default
+data:
+  {{- range $key, $val := .Values.web.safe }}
+  {{ $key }}: {{ $val | quote }}
+  {{- end }}

@@ -1,0 +1,49 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: web
+  labels:
+    app: web
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: web
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/web/configmap.yaml") . | sha256sum }}
+    spec:
+      containers:
+      - name: web
+        image: imparaai/go-figure-web
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4200
+          name: angular-dev
+        - containerPort: 80
+          name: http
+        readinessProbe:
+          exec:
+            command:
+            - cat
+            - /var/healthy
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        envFrom:
+          - configMapRef:
+              name: web-config
+      {{- if .Values.web.development_volume }}
+        volumeMounts:
+          - name: web
+            mountPath: /var/www/go-figure
+      volumes:
+      - name: web
+        hostPath:
+          path: {{ .Values.web.development_volume }}
+      {{- end }}
+      restartPolicy: Always
