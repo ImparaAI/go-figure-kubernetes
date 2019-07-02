@@ -22,9 +22,3 @@ If you want a slightly more isolated approach, you can head to the `/kubectl` di
 4. Head over to `cd /var/kube`
 
 If you've already set up your gcloud values.yaml, you can run `./gcloud_install` from the root. Otherwise if you want to do it manually and get stuck, that file is a good place to start figuring out what is needed to get it all running.
-
-## Setting up your cluster with an Nvidia GPU
-
-Modify the `values.yaml` file to set `prediction.nvidia_gpu` to `true`. Make
-
-If you're running `./gcloud_install`, that script will install the drivers for you. Otherwise, you should make sure you follow the [Kubernetes instructions for scheduling GPUs](https://kubernetes.io/docs/tasks/manage-gpus/scheduling-gpus) to ensure the prediction container has access to the correct drivers and node pools.
