@@ -4,6 +4,6 @@ metadata:
   name: backend-config
   namespace: default
 data:
-  {{- range $key, $val := .Values.backend.safe }}
+  {{- range $key, $val := .Values.backend.env.safe }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}

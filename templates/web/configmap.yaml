@@ -4,6 +4,6 @@ metadata:
   name: web-config
   namespace: default
 data:
-  {{- range $key, $val := .Values.web.safe_environments }}
+  {{- range $key, $val := .Values.web.env.safe }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
