@@ -9,16 +9,14 @@ data:
       server_name {{ .Values.web.domain }};
 
       location / {
-        proxy_pass http://web:80;
-      }
-    }
 
-    server {
-      listen 4200;
-      server_name {{ .Values.web.domain }};
+        return 200 'test';
 
-      location / {
-        proxy_pass http://web:4200;
+        {{- if .Values.web.env.safe.DEVELOPMENT }}
+          proxy_pass http://web:4200;
+        {{- else }}
+          proxy_pass http://web:80;
+        {{- end }}
       }
     }
 
