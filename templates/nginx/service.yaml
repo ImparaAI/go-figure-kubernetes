@@ -6,10 +6,14 @@ metadata:
     app: nginx
 spec:
   ports:
-  - port: 80
+  - name: http
+    protocol: TCP
+    port: 80
     targetPort: http
-  - port: 4200
-    targetPort: http-angular
+  - name: angular-cli
+    protocol: TCP
+    port: 4200
+    targetPort: angular-cli
   selector:
     app: nginx
   type: NodePort
