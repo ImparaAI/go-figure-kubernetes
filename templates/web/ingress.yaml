@@ -22,7 +22,7 @@ spec:
       - path: /
         backend:
           serviceName: nginx
-        {{- if .Values.web.safe_environments.DEVELOPMENT }}
+        {{- if .Values.web.env.safe.DEVELOPMENT }}
           servicePort: 4200
         {{- else }}
           servicePort: 80
