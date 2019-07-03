@@ -10,10 +10,6 @@ spec:
     protocol: TCP
     port: 80
     targetPort: http
-  - name: angular-cli
-    protocol: TCP
-    port: 4200
-    targetPort: angular-cli
   selector:
     app: nginx
   type: NodePort

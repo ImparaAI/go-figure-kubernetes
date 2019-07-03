@@ -9,14 +9,7 @@ data:
       server_name {{ .Values.web.domain }};
 
       location / {
-
-        return 200 'test';
-
-        {{- if .Values.web.env.safe.DEVELOPMENT }}
-          proxy_pass http://web:4200;
-        {{- else }}
-          proxy_pass http://web:80;
-        {{- end }}
+        proxy_pass http://web:80;
       }
     }
 
