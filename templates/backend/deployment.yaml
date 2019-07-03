@@ -1,0 +1,47 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: backend
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/backend/configmap.yaml") . | sha256sum }}
+    spec:
+      containers:
+      - name: backend
+        image: imparaai/go-figure-backend
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+        readinessProbe:
+          exec:
+            command:
+            - cat
+            - /var/healthy
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        envFrom:
+          - configMapRef:
+              name: backend-config
+      {{- if .Values.backend.development_volume }}
+        volumeMounts:
+          - name: backend
+            mountPath: /var/www/go-figure
+      volumes:
+      - name: backend
+        hostPath:
+          path: {{ .Values.backend.development_volume }}
+      {{- end }}
+      restartPolicy: Always

@@ -1,5 +1,10 @@
 web:
-  domain: app.gofigure.local
+  domain: web.gofigure.local
+  development_volume: /c/ImparaAi/go-figure-web
+  safe:
+    DEVELOPMENT: true
+backend:
+  domain: backend.gofigure.local
   development_volume: /c/ImparaAi/go-figure-web
   safe:
     DEVELOPMENT: true
