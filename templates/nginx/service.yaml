@@ -8,6 +8,8 @@ spec:
   ports:
   - port: 80
     targetPort: http
+  - port: 4200
+    targetPort: http-angular
   selector:
     app: nginx
   type: NodePort

@@ -24,7 +24,7 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 4200
-          name: angular-dev
+          name: angular-cli
         - containerPort: 80
           name: http
         readinessProbe:
@@ -45,5 +45,4 @@ spec:
       - name: web
         hostPath:
           path: {{ .Values.web.development_volume }}
-      {{- end }}
       restartPolicy: Always
