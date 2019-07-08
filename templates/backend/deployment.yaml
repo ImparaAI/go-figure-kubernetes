@@ -38,7 +38,7 @@ spec:
       {{- if .Values.backend.development_volume }}
         volumeMounts:
           - name: backend
-            mountPath: /var/www/go-figure
+            mountPath: /go/src/app
       volumes:
       - name: backend
         hostPath:
