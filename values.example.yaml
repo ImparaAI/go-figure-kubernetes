@@ -4,9 +4,9 @@ web:
   env:
     safe:
       DEVELOPMENT: true
-backend:
-  domain: backend.gofigure.local
-  development_volume: /c/ImparaAi/go-figure-backend
+api:
+  domain: api.gofigure.local
+  development_volume: /c/ImparaAi/go-figure-api
   env:
     safe:
       DEVELOPMENT: true

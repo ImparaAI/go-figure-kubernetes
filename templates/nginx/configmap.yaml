@@ -15,9 +15,9 @@ data:
 
     server {
       listen 80;
-      server_name {{ .Values.backend.domain }};
+      server_name {{ .Values.api.domain }};
 
       location / {
-        proxy_pass http://backend:80;
+        proxy_pass http://api:80;
       }
     }
