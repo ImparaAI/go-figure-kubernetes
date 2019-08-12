@@ -1,0 +1,29 @@
+version: '2.1'
+services:
+  kubectldata:
+    image: cirros
+    container_name: kubectldata
+  kubectl:
+    build: .
+    container_name: kubectl
+    hostname: kubectl
+    volumes:
+      - gofigurekubebashhistory:/root/bash
+      - gofigurekubeconfig:/root/.kube
+      - gofigurekubehelmconfig:/root/.helm
+      - gofigurekubegcloudconfig:/root/.config/gcloud
+    volumes_from:
+      - kubectldata
+    ports:
+      - "8001:8001"
+    environment:
+      HISTFILE: "/root/bash/.bash_history"
+volumes:
+  gofigurekubebashhistory:
+    name: gofigurekubebashhistory
+  gofigurekubeconfig:
+    name: gofigurekubeconfig
+  gofigurekubegcloudconfig:
+    name: gofigurekubegcloudconfig
+  gofigurekubehelmconfig:
+    name: gofigurekubehelmconfig
