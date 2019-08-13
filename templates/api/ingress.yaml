@@ -8,7 +8,6 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     kubernetes.io/tls-acme: "true"
     certmanager.k8s.io/cluster-issuer: letsencrypt-cluster-issuer
-    kubernetes.io/ingress.class: "nginx"
     {{- end }}
 spec:
   tls:
