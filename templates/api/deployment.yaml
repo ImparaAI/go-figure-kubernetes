@@ -2,8 +2,6 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: api
-  labels:
-    app: api
 spec:
   replicas: 1
   strategy:
@@ -24,7 +22,6 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
-          name: http
         readinessProbe:
           exec:
             command:
