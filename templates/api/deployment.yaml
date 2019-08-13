@@ -41,4 +41,3 @@ spec:
         hostPath:
           path: {{ .Values.api.development_volume }}
       {{- end }}
-      restartPolicy: Always
