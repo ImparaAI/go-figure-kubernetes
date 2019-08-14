@@ -12,3 +12,5 @@ api:
   env:
     safe:
       DEVELOPMENT: true
+mysql:
+  volume_size: 1Gi
