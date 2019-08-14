@@ -36,4 +36,4 @@ spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 100Mi
+          storage: {{ .Values.mysql.volume_size | default "500Mi" }}
