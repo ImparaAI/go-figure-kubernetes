@@ -1,21 +1,23 @@
-apiVersion: apps/v1
-kind: StatefulSet
+apiVersion: extensions/v1beta1
+kind: Deployment
 metadata:
   name: api
+  labels:
+    app: api
 spec:
-  selector:
-    matchLabels:
-      app: api
-  serviceName: api
   replicas: 1
-  updateStrategy:
+  strategy:
     type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
   template:
     metadata:
       labels:
         app: api
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/api/configmap.yaml") . | sha256sum }}
     spec:
-      terminationGracePeriodSeconds: 5
       containers:
       - name: api
         image: imparaai/go-figure-api
@@ -33,23 +35,17 @@ spec:
         envFrom:
           - configMapRef:
               name: api-config
-        volumeMounts:
-          - name: sqlite-data
-            mountPath: /go/src/app/database/sqlite
       {{- if .Values.api.development_volume }}
+        volumeMounts:
           - name: api
             mountPath: /go/src/app
       volumes:
-      - name: api-dev
+      - name: api
         hostPath:
           path: {{ .Values.api.development_volume }}
       {{- end }}
       restartPolicy: Always
-  volumeClaimTemplates:
-  - metadata:
-      name: sqlite-data
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: 10Gi
+      # initContainers:
+      #   - name: init-mysql
+      #     image: busybox
+      #     command: ['sh', '-c', 'until nslookup mysql; do echo waiting for mysql; sleep 2; done;']
