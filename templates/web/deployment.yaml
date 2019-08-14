@@ -2,8 +2,6 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: web
-  labels:
-    app: web
 spec:
   replicas: 1
   strategy:
@@ -24,7 +22,6 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80
-          name: http
         readinessProbe:
           exec:
             command:
@@ -44,4 +41,3 @@ spec:
         hostPath:
           path: {{ .Values.web.development_volume }}
       {{- end }}
-      restartPolicy: Always
