@@ -8,4 +8,4 @@ spec:
     server: https://acme-v02.api.letsencrypt.org/directory
     http01: {}
     privateKeySecretRef:
-      name: letsencrypt-staging
+      name: letsencrypt-prod
