@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: api-config
-  namespace: default
-data:
-  {{- range $key, $val := .Values.api.env.safe }}
-  {{ $key }}: {{ $val | quote }}
-  {{- end }}

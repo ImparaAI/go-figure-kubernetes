@@ -13,12 +13,14 @@ spec:
     metadata:
       labels:
         app: api
-      annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/api/configmap.yaml") . | sha256sum }}
     spec:
       containers:
       - name: api
+        {{- if .Values.api.development_volume }}
+        image: imparaai/go-figure-api:dev
+        {{- else }}
         image: imparaai/go-figure-api
+        {{- end }}
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -29,9 +31,6 @@ spec:
             - /var/healthy
           initialDelaySeconds: 3
           periodSeconds: 3
-        envFrom:
-          - configMapRef:
-              name: api-config
       {{- if .Values.api.development_volume }}
         volumeMounts:
           - name: api
