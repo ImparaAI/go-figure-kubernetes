@@ -34,7 +34,7 @@ spec:
       {{- if .Values.web.development_volume }}
         volumeMounts:
           - name: web
-            mountPath: /var/www/go-figure
+            mountPath: /app
       volumes:
       - name: web
         hostPath:
