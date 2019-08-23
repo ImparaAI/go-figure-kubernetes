@@ -3,11 +3,15 @@ kind: Deployment
 metadata:
   name: api
 spec:
+  {{- if .Values.api.development_volume }}
   replicas: 1
+  {{- else }}
+  replicas: 2
+  {{- end }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
-      maxSurge: 2
+      maxSurge: 4
       maxUnavailable: 0
   template:
     metadata:
