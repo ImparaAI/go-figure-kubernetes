@@ -2,9 +2,6 @@ web:
   domain: web.gofigure.local
   development_volume: /c/ImparaAi/go-figure-web
   https: true
-  env:
-    safe:
-      DEVELOPMENT: true
 api:
   domain: api.gofigure.local
   development_volume: /c/ImparaAi/go-figure-api

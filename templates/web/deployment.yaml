@@ -13,13 +13,15 @@ spec:
     metadata:
       labels:
         app: web
-      annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/web/configmap.yaml") . | sha256sum }}
     spec:
       containers:
       - name: web
+        {{- if .Values.api.development_volume }}
+        image: imparaai/go-figure-web:dev
+        {{- else }}
         image: imparaai/go-figure-web
-        imagePullPolicy: Always
+        {{- end }}
+        imagePullPolicy: Never
         ports:
         - containerPort: 80
         readinessProbe:
@@ -29,9 +31,6 @@ spec:
             - /var/healthy
           initialDelaySeconds: 3
           periodSeconds: 3
-        envFrom:
-          - configMapRef:
-              name: web-config
       {{- if .Values.web.development_volume }}
         volumeMounts:
           - name: web
