@@ -9,5 +9,8 @@ api:
   domain: api.gofigure.local
   development_volume: /c/ImparaAi/go-figure-api
   https: true
+  env:
+    secret:
+      DB_PASSWORD: password
 mysql:
   volume_size: 1Gi

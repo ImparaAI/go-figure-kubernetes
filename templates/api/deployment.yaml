@@ -13,6 +13,8 @@ spec:
     metadata:
       labels:
         app: api
+      annotations:
+        checksum/secrets: {{ include (print $.Template.BasePath "/api/secrets.yaml") . | sha256sum }}
     spec:
       containers:
       - name: api
@@ -31,6 +33,9 @@ spec:
             - /var/healthy
           initialDelaySeconds: 3
           periodSeconds: 3
+        envFrom:
+          - secretRef:
+              name: api-secrets
       {{- if .Values.api.development_volume }}
         volumeMounts:
           - name: api
