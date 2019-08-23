@@ -21,7 +21,7 @@ spec:
         {{- else }}
         image: imparaai/go-figure-web
         {{- end }}
-        imagePullPolicy: Never
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         readinessProbe:
