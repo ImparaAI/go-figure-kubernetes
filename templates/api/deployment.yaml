@@ -31,11 +31,10 @@ spec:
         ports:
         - containerPort: 8080
         readinessProbe:
-          exec:
-            command:
-            - cat
-            - /var/healthy
-          initialDelaySeconds: 3
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
           periodSeconds: 3
         envFrom:
           - secretRef:
