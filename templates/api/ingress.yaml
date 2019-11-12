@@ -7,7 +7,7 @@ metadata:
     {{- if .Values.api.https }}
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     kubernetes.io/tls-acme: "true"
-    certmanager.k8s.io/cluster-issuer: letsencrypt-cluster-issuer
+    cert-manager.io/cluster-issuer: letsencrypt-cluster-issuer
     {{- end }}
 spec:
   tls:

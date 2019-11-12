@@ -3,7 +3,7 @@ dependencies:
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 0.22.1
 - name: cert-manager
-  repository: https://kubernetes-charts.storage.googleapis.com/
-  version: v0.6.7
-digest: sha256:16c36c27ef07de0b35fd982fd91eaca1a6e18a858478a834ddf2e221210006d8
-generated: 2019-11-12T07:59:43.640296Z
+  repository: https://charts.jetstack.io
+  version: v0.11.0
+digest: sha256:988bfe9898e508a4389dddf9d828e6c9bd62047e3590da62c065aca69eaa9f34
+generated: 2019-11-12T18:51:33.4993826Z
