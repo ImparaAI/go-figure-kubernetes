@@ -4,4 +4,4 @@ dependencies:
   version: ~0.22.0
 - name: cert-manager
   repository: https://kubernetes-charts.storage.googleapis.com/
-  version: ~0.5.0
+  version: ~0.6.7
