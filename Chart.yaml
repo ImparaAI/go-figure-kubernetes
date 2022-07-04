@@ -2,3 +2,11 @@ name: imparaai-go-figure-kubernetes
 version: v0.1.0
 description: Impara AI Go Figure stack
 home: https://github.com/ImparaAI/go-figure-kubernetes
+
+dependencies:
+- name: ingress-nginx
+  version: 4.0.2
+  repository: https://kubernetes.github.io/ingress-nginx
+- name: cert-manager
+  repository: https://charts.jetstack.io
+  version: v1.8.2

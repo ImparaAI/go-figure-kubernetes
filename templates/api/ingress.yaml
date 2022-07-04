@@ -1,4 +1,4 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api
@@ -8,17 +8,24 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     kubernetes.io/tls-acme: "true"
     cert-manager.io/cluster-issuer: letsencrypt-cluster-issuer
+    {{- else }}
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
     {{- end }}
 spec:
+  {{- if .Values.api.https }}
   tls:
   - hosts:
     - {{ required "api.domain value required" .Values.api.domain }}
     secretName: tls-go-figure-api
+  {{- end }}
   rules:
   - host: {{ required "api.domain value required" .Values.api.domain }}
     http:
       paths:
       - path: /
+        pathType: ImplementationSpecific
         backend:
-          serviceName: api
-          servicePort: 80
+          service:
+            name: api
+            port:
+              number: 80

@@ -1,13 +1,14 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: api
+  labels:
+    app: api
 spec:
-  {{- if .Values.api.development_volume }}
   replicas: 1
-  {{- else }}
-  replicas: 2
-  {{- end }}
+  selector:
+    matchLabels:
+      app: api
   strategy:
     type: RollingUpdate
     rollingUpdate:
