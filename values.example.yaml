@@ -8,6 +8,7 @@ api:
   https: true
   env:
     secret:
+      DB_CONNECTION: tcp(mysql:3306)
       DB_PASSWORD: password
 mysql:
   volume_size: 1Gi
